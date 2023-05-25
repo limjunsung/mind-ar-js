@@ -13221,7 +13221,11 @@ const bb = {
   zeros: Ur,
   zerosLike: Gr
 }, Symbol.toStringTag, { value: "Module" })), ui = new xe();
-ui.compose(new Ne(), new Ut(), new Ne(1e-3, 1e-3, 1e-3));
+ui.compose(
+  new Ne(),
+  new Ut(),
+  new Ne(1e-3, 1e-3, 1e-3)
+);
 class wb {
   constructor({
     container: e,
@@ -13235,7 +13239,7 @@ class wb {
     warmupTolerance: p = null,
     missTolerance: m = null
   }) {
-    this.container = e, this.imageTargetSrc = t, this.maxTrack = a, this.filterMinCF = u, this.filterBeta = l, this.warmupTolerance = p, this.missTolerance = m, this.ui = new dd({ uiLoading: r, uiScanning: n, uiError: o }), this.scene = new It(), this.cssScene = new It(), this.renderer = new pi({ antialias: !0, alpha: !0 }), this.cssRenderer = new cd({ antialias: !0 }), this.renderer.outputEncoding = mi, this.renderer.setPixelRatio(window.devicePixelRatio), this.camera = new ci(), this.anchors = [], this.renderer.domElement.style.position = "absolute", this.cssRenderer.domElement.style.position = "absolute", this.container.appendChild(this.renderer.domElement), this.container.appendChild(this.cssRenderer.domElement), window.addEventListener("resize", this.resize.bind(this));
+    this.container = e, this.imageTargetSrc = t, this.maxTrack = a, this.filterMinCF = u, this.filterBeta = l, this.warmupTolerance = p, this.missTolerance = m, this.ui = new dd({ uiLoading: r, uiScanning: n, uiError: o }), this.scene = new It(), this.cssScene = new It(), this.renderer = new pi({ antialias: !0, alpha: !0 }), this.cssRenderer = new cd({ antialias: !0 }), this.renderer.outputEncoding = mi, this.renderer.setPixelRatio(window.devicePixelRatio), this.camera = new ci(), this.anchors = [], this.renderer.domElement.style.position = "absolute", this.cssRenderer.domElement.style.position = "absolute", this.container.appendChild(this.renderer.domElement), this.container.appendChild(this.cssRenderer.domElement), console.error("===constructor==="), console.error("window follow:"), console.error(window), console.error("this"), console.error(this), console.error("this.resize"), console.error(this.resize), window.addEventListener("resize", this.resize.bind(this));
   }
   async start() {
     this.ui.showLoading(), await this._startVideo(), await this._startAR();
@@ -13248,13 +13252,29 @@ class wb {
   addAnchor(e) {
     const t = new $t();
     t.visible = !1, t.matrixAutoUpdate = !1;
-    const a = { group: t, targetIndex: e, onTargetFound: null, onTargetLost: null, onTargetUpdate: null, css: !1, visible: !1 };
+    const a = {
+      group: t,
+      targetIndex: e,
+      onTargetFound: null,
+      onTargetLost: null,
+      onTargetUpdate: null,
+      css: !1,
+      visible: !1
+    };
     return this.anchors.push(a), this.scene.add(t), a;
   }
   addCSSAnchor(e) {
     const t = new $t();
     t.visible = !1, t.matrixAutoUpdate = !1;
-    const a = { group: t, targetIndex: e, onTargetFound: null, onTargetLost: null, onTargetUpdate: null, css: !0, visible: !1 };
+    const a = {
+      group: t,
+      targetIndex: e,
+      onTargetFound: null,
+      onTargetLost: null,
+      onTargetUpdate: null,
+      css: !0,
+      visible: !1
+    };
     return this.anchors.push(a), this.cssScene.add(t), a;
   }
   _startVideo() {
@@ -13317,14 +13337,21 @@ class wb {
     });
   }
   resize() {
+    console.error("===resize===");
     const { renderer: e, cssRenderer: t, camera: a, container: r, video: n } = this;
     if (!n)
       return;
     let o, u;
-    const l = n.videoWidth / n.videoHeight, p = r.clientWidth / r.clientHeight;
-    l > p ? (u = r.clientHeight, o = u * l) : (o = r.clientWidth, u = o / l);
+    const l = n.videoWidth / n.videoHeight;
+    console.error(
+      `video - width: ${n.videoWidth}, height: ${n.videoHeight}, ratio: ${l}`
+    );
+    const p = r.clientWidth / r.clientHeight;
+    console.error(
+      `container - width: ${r.clientWidth}, height: ${r.clientHeight}, ratio: ${p}`
+    ), l > p ? (console.error("videoRatio > containerRatio"), u = r.clientHeight, o = u * l) : (console.error("videoRatio <= containerRatio"), o = r.clientWidth, u = o / l), console.error(`vw: ${o} vh: ${u}`);
     const m = this.controller.getProjectionMatrix(), c = 2 * Math.atan(1 / m[5] / u * r.clientHeight) * 180 / Math.PI, d = m[14] / (m[10] - 1), h = m[14] / (m[10] + 1);
-    m[5] / m[0], a.fov = c, a.near = d, a.far = h, a.aspect = r.clientWidth / r.clientHeight, a.updateProjectionMatrix(), n.style.top = -(u - r.clientHeight) / 2 + "px", n.style.left = -(o - r.clientWidth) / 2 + "px", n.style.width = o + "px", n.style.height = u + "px";
+    m[5] / m[0], a.fov = c, a.near = d, a.far = h, a.aspect = r.clientWidth / r.clientHeight, a.updateProjectionMatrix(), console.error(`video.style.top: ${-(u - r.clientHeight) / 2}`), console.error(`video.style.left: ${-(o - r.clientWidth) / 2}`), n.style.top = -(u - r.clientHeight) / 2 + "px", n.style.left = -(o - r.clientWidth) / 2 + "px", n.style.width = o + "px", n.style.height = u + "px";
     const b = e.domElement, f = t.domElement;
     b.style.position = "absolute", b.style.left = 0, b.style.top = 0, b.style.width = r.clientWidth + "px", b.style.height = r.clientHeight + "px", f.style.position = "absolute", f.style.left = 0, f.style.top = 0, f.style.width = r.clientWidth + "px", f.style.height = r.clientHeight + "px", e.setSize(r.clientWidth, r.clientHeight), t.setSize(r.clientWidth, r.clientHeight);
   }
